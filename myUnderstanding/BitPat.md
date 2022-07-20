@@ -55,7 +55,13 @@ require(x.mask == (BigInt(1) << x.getWidth) - 1)
 
 输入一个bitpats序列，返回一个BitSet类flatMap这些也有点整不明白,但是大致能理解是在从不同类型的数据转成BitSet内应该存的数据
 
-## sealed class BitPat(val value: BigInt, val mask: BigInt, val width: Int) 
+## sealed trait BitSet
+
+定义了许多特性函数,属性(terms),获取宽度(getWidth),转为字符串(toString),是否为空(isEmpty),是否有匹配项(matches(input: UInt)),是否有重复(overlap),是否包括(cover(that: BitSet)),求交集(intersect(that: BitSet)),求补集(subtract(that: BitSet)),相加(union(that: BitSet))判断是否相等(equals(obj: Any))   
+
+## sealed class BitPat(val value: BigInt, val mask: BigInt, val width: Int)  
 
 extends util.experimental.BitSet with SourceInfoDoc
 介绍了一堆BitPat类的字函数,如获得宽度之类，也有获得原串之类的，以及部分运算的重载。。。。我发现涉及到SourceInfoDoc相关的我就抓瞎了。。。。可能后续要找找那个看看。是不是chisel的自定的东西。不太懂。还没开始研究。
+
+定义了一些函数和运算，有判断相等的(===),不等的(=/=),是否有重复(overlap),是否包括(cover(that: BitSet)),求交集(intersect(that: BitSet)),求补集(subtract(that: BitSet)),是否为空(isEmpty),原字符串(rawString)  
