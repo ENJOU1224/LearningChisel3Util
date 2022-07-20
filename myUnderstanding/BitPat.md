@@ -64,4 +64,4 @@ require(x.mask == (BigInt(1) << x.getWidth) - 1)
 extends util.experimental.BitSet with SourceInfoDoc
 介绍了一堆BitPat类的字函数,如获得宽度之类，也有获得原串之类的，以及部分运算的重载。。。。我发现涉及到SourceInfoDoc相关的我就抓瞎了。。。。可能后续要找找那个看看。是不是chisel的自定的东西。不太懂。还没开始研究。
 
-定义了一些函数和运算，有判断相等的(===),不等的(=/=),是否有重复(overlap),是否包括(cover(that: BitSet)),求交集(intersect(that: BitSet)),求补集(subtract(that: BitSet)),是否为空(isEmpty),原字符串(rawString)  
+定义了一些函数和运算，有判断相等的(===),不等的(=/=),是否有重复(overlap),是否包括(cover(that: BitPat)),求交集(intersect(that: BitPat)),求补集(subtract(that: BitPat)),是否为空(isEmpty),原字符串(rawString)  
