@@ -20,8 +20,8 @@ n个gen类型及宽度的带ready-valid输入，1个gen类型及宽度输出的�
 ## class LockingRRArbiter[T <: Data](gen: T, n: Int, count: Int, needsLock: Option[T => Bool] = None) extends LockingArbiterLike[T](gen, n, count, needsLock)
 
 带锁定的循环优先级仲裁器,LockingArbiterLike的子类，在 LockingArbiterLike的基础上补充了循环优先级相关的逻辑。
-优先级部分，记录了上一输出位(lastGrant)，基于上一输出位得到了优先级掩码(grantMask)，再通过掩码与输入的valid信号得出valid掩码(validMask)。
-新的优先级(grant)上，ctrl(i) && grantMask(i) || ctrl(i+n)用于实现循环优先级，ArbiterCtrl会按编号来从高到低优先级遍历，将第一个遍历到的validMask及更高优先级的位置全部置为true,之后的全部置为false,由于我们需要循环优先级，在这里将ctrl(i)与grantMask(i)相与,这样就将曾经循环到过的优先级屏蔽。只保留未循环到的部分。但若当前循环到的最高优先级到按序号的最低优先级之间没有validMask为true的,则轮到在循环优先级中优先级更低的，在序号优先级中优先级更高的已循环到的部分优先级。或上ctrl(i+n)部分的用意在此。。。
+优先级部分，记录了上一输出许可(lastGrant)，基于上一输出位得到了许可掩码(grantMask)，再通过掩码与输入的valid信号得出valid掩码(validMask)。
+新的许可(grant)上，ctrl(i) && grantMask(i) || ctrl(i+n)用于实现循环优先级，ArbiterCtrl会按编号来从高到低优先级遍历，将第一个遍历到的validMask及更高优先级的位置全部置为true,之后的全部置为false,由于我们需要循环优先级，在这里将ctrl(i)与grantMask(i)相与,这样就将曾经循环到过的优先级屏蔽。只保留未循环到的部分。但若当前循环到的最高优先级到按序号的最低优先级之间没有validMask为true的,则轮到在循环优先级中优先级更低的，在序号优先级中优先级更高的已循环到的部分优先级。或上ctrl(i+n)部分的用意在此。。。
 新的选择(choice)上,默认为n-1,由优先级低到高进行两次循环,保证了循环优先级中的次序优先,按循环结果来说，若有任意一个validMask为true,则不需要考虑valid的循环情况，validMask循环保证了按循环优先级高优先级的部分能被优先考虑，当validMask全为false时，再去考虑valid循环的情况，valid循环是照顾了在循环优先级中优先级低的高次序优先级位置。
 
 ## class LockingArbiter[T <: Data](gen: T, n: Int, count: Int, needsLock: Option[T => Bool] = None) extends LockingArbiterLike[T](gen, n, count, needsLock)
